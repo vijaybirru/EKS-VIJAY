@@ -1,1 +1,99 @@
 Kubernetes architecture
+
+Kubernetes components:
+
+A
+C
+C
+e              
+k
+s
+
+acc cement eks 
+
+A -API-server                -Master
+C -controller                -Master
+C -container run time        -Node
+E -etcd                      -Master
+k -kubelet                   -Node
+s -scheduler                 -Master
+
+
+control plane : master component 
+
+
+A -API-server -- The API server is a component of the Kubernetes control plane that exposes the Kubernetes API. 
+The API server is the front end for the Kubernetes control plane.
+
+The main implementation of a Kubernetes API server is kube-apiserver. 
+kube-apiserver is designed to scale horizontally—that is, it scales by deploying more instances. 
+You can run several instances of kube-apiserver and balance traffic between those instances.
+
+C -controller
+
+
+C -container run time
+The container runtime is the software that is responsible for running containers.
+
+Kubernetes supports several container runtimes: Docker, containerd, CRI-O, and any implementation of the Kubernetes CRI (Container Runtime Interface).
+
+
+E -etcd
+Consistent and highly-available key value store used as Kubernetes' backing store for all cluster data.
+
+k -kubelet
+An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
+
+The kubelet takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy. The kubelet doesn't manage containers which were not created by Kubernetes.
+
+
+s -scheduler
+Control plane component that watches for newly created Pods with no assigned node, and selects a node for them to run on.
+
+
+
+
+
+--------
+
+Replication controller 
+
+Replica set
+
+Deployment update and roll back
+
+Networking in K8S
+
+Services in K8S
+
+i.Nodeport
+ii. clusterip
+iii.Load balancer
+
+
+
+Kubeproxy:
+
+Imperative vs Declarative
+
+Scheduling:
+Manual scheduling
+Labels & selectors
+Taints & Tolrations
+Node selectors
+Node Affinity
+static pods
+multiple schedulers
+MOnitor cluster components
+Managing application logs
+Configure Environment Variables in Applications
+Configuring ConfigMaps in Applications
+Configuring secrets in Applications
+scale applications
+Multi container pods
+Init container
+cluster upgrade
+service accounts
+TLS in k8s
+
+
