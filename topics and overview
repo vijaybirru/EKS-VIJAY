@@ -56,9 +56,54 @@ Control plane component that watches for newly created Pods with no assigned nod
 
 --------
 
-Replication controller 
+Pods and Services
 
-Replica set
+Pods are one of the crucial concepts in Kubernetes, as they are the key construct that developers interact with. 
+ods are ephemeral, with a limited lifespan. When scaling back down or upgrading to a new version, for instance, pods eventually die.
+Pods can do horizontal autoscaling (i.e., grow or shrink the number of instances), and perform rolling updates and canary deployments.
+There are various types of pods:
+ReplicaSet, the default, is a relatively simple type. It ensures the specified number of pods are running
+Deployment is a declarative way of managing pods via ReplicaSets. Includes rollback and rolling update mechanisms
+Daemonset is a way of ensuring each node will run an instance of a pod. Used for cluster services, like health monitoring and log forwarding
+StatefulSet is tailored to managing pods that must persist or maintain state
+Job and CronJob run short-lived jobs as a one-off or on a schedule.
+
+
+Kubernetes Services
+Services are the Kubernetes way of configuring a proxy to forward traffic to a set of pods. 
+Instead of static IP address-based assignments, Services use selectors (or labels) to define which pods uses which service. 
+These dynamic assignments make releasing new versions or adding pods to a service really easy. 
+Anytime a Pod with the same labels as a service is spun up, it’s assigned to the service.
+
+Kubernetes Services
+Services are the Kubernetes way of configuring a proxy to forward traffic to a set of pods. Instead of static IP address-based assignments, Services use selectors (or labels) to define which pods uses which service. These dynamic assignments make releasing new versions or adding pods to a service really easy. Anytime a Pod with the same labels as a service is spun up, it’s assigned to the service.
+
+By default, services are only reachable inside the cluster using the clusterIP service type. Other service types do allow external access; the LoadBalancer type is the most common in cloud deployments. It will spin up a load balancer per service on the cloud environment, which can be expensive. With many services, it can also become very complex.
+
+To solve that complexity and cost, Kubernetes supports Ingress, a high-level abstraction governing how external users access services running in a Kubernetes cluster using host- or URL-based HTTP routing rules.
+
+There are many different Ingress controllers (Nginx, Ambassador), and there’s support for cloud-native load balancers (from Google, Amazon, and Microsoft). Ingress controllers allow you to expose multiple services under the same IP address, using the same load balancers.
+
+Ingress functionality goes beyond simple routing rules, too. Ingress enables configuration of resilience (time-outs, rate limiting), content-based routing, authentication and much more.
+
+
+Kubernetes Networking:
+
+Networking Kubernetes has a distinctive networking model for cluster-wide, podto-pod networking. In most cases, the Container Network Interface (CNI) uses a simple overlay network (like Flannel) to obscure the underlying network from the pod by using traffic encapsulation (like VXLAN); it can also use a fully-routed solution like Calico. In both cases, pods communicate over a cluster-wide pod network, managed by a CNI provider like Flannel or Calico.
+
+Within a pod, containers can communicate without any restrictions. Containers within a pod exist within the same network namespace and share an IP. This means containers can communicate over localhost. Pods can communicate with each other using the pod IP address, which is reachable across the cluster.
+
+Moving from pods to services, or from external sources to services, requires going through kube-proxy.
+
+
+
+
+Replication controller : old. 
+
+Replica set: new  
+which contains 
+labels & selectors 
+
 
 Deployment update and roll back
 
@@ -79,19 +124,19 @@ Imperative vs Declarative
 Scheduling:
 Manual scheduling
 Labels & selectors
-Taints & Tolrations
-Node selectors
-Node Affinity
-static pods
+Taints & Tolrations : 4 nodes --- deploy the pod to only selected node , by using taint & tolrations
+Node selectors : for selecting node to deploy the pod on specific 
+Node Affinity : if we want to deploy specific pod to one node. and that node is cpu 100% , then by using affinity it will deploy to that node only
+static pods 
 multiple schedulers
 MOnitor cluster components
 Managing application logs
 Configure Environment Variables in Applications
-Configuring ConfigMaps in Applications
+Configuring ConfigMaps in Applications: passing env variables to pod .
 Configuring secrets in Applications
 scale applications
 Multi container pods
-Init container
+Init container : 
 cluster upgrade
 service accounts
 TLS in k8s
