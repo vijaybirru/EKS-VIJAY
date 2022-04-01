@@ -23,8 +23,8 @@ https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 create an admin user in IAM(AWS)
 
 [root@ip-172-31-94-92 ~]# aws configure
-AWS Access Key ID [None]: AKIATP62NQXYPKAUZ7MI
-AWS Secret Access Key [None]: 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
+AWS Access Key ID [None]: 
+AWS Secret Access Key [None]:
 Default region name [None]: us-east-1
 Default output format [None]:
 
